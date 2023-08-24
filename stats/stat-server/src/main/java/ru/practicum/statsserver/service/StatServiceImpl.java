@@ -24,7 +24,6 @@ import ru.practicum.statsserver.repository.StatRepository;
 public class StatServiceImpl implements StatService {
 
     private final StatRepository statRepository;
-    //private static final DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public EndpointHitDto addEndpointHit(EndpointHitDto endpointHitDto) {
