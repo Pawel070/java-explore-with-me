@@ -2,8 +2,8 @@ package ru.practicum.statsserver.mapper;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
 import lombok.extern.slf4j.Slf4j;
+
 import ru.practicum.statdto.EndpointHitDto;
 import ru.practicum.statsserver.model.EndpointHit;
 
