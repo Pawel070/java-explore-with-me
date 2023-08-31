@@ -1,12 +1,12 @@
 package ru.practicum.statsserver.mapper;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import ru.practicum.statdto.ViewStatsDto;
 import ru.practicum.statsserver.model.ViewStats;
 
@@ -25,11 +25,9 @@ public final class ViewStatsMapper {
 
     public static List<ViewStatsDto> listToViewStatsDto(List<ViewStats> list) {
         log.info("ViewStatsMapper listToViewStatsDto...");
-        if (!list.isEmpty()) {
-            return list.stream()
-                    .map(ViewStatsMapper::toViewStatsDto)
-                    .collect(Collectors.toList());
-        }
-        return List.of();
+        List<ViewStatsDto> viewStatsDtos;
+        if (list.isEmpty()) viewStatsDtos = Collections.emptyList();
+        else viewStatsDtos = list.stream().map(ViewStatsMapper::toViewStatsDto).collect(Collectors.toList());
+        return viewStatsDtos;
     }
 }
