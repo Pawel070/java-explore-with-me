@@ -23,7 +23,7 @@ public class StatClient extends BaseClient {
 
     @Autowired
     public StatClient(@Value(API_PREFIX) String serverUrl, RestTemplateBuilder builder) {
-        super(builder
+       super(builder
                 .uriTemplateHandler(new DefaultUriBuilderFactory(serverUrl + API_PREFIX))
                 .requestFactory(HttpComponentsClientHttpRequestFactory::new)
                 .build()

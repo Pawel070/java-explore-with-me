@@ -1,9 +1,10 @@
 package ru.practicum.statsserver.controller;
 
-import javax.validation.Valid;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import jakarta.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
