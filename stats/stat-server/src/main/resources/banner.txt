@@ -1,4 +1,0 @@
-
-${AnsiColor.BRIGHT_MAGENTA}  EXPLORE WITH ME ${AnsiColor.BRIGHT_CYAN} Yandex ПРАКТИКУМ
-       ${AnsiColor.DEFAULT}  Sprint 17 -> Диплом
-  spring-boot.version ${spring-boot.version}
