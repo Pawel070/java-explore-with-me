@@ -20,10 +20,6 @@ import ru.practicum.event.model.Event;
         return null;
     }
 
-/*
-@UtilityClass
-public class CompilationMapper {
-*/
     default Compilation toCompilation(CompilationCreateDto newCompilationDto, HashSet<Event> events) {
         return Compilation.builder()
                 .events(events)

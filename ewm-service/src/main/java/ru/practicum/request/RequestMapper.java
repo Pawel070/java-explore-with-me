@@ -1,6 +1,7 @@
 package ru.practicum.request;
 
 import lombok.experimental.UtilityClass;
+
 import ru.practicum.request.dto.ParticipationRequestDto;
 import ru.practicum.request.model.ParticipationRequest;
 
