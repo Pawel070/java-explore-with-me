@@ -2,8 +2,6 @@ package ru.practicum.comments;
 
 import java.time.LocalDateTime;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import lombok.experimental.UtilityClass;
 
 import ru.practicum.comments.dto.CommentAddDto;
@@ -15,7 +13,6 @@ import ru.practicum.user.UserMapper;
 import ru.practicum.user.model.User;
 
 @UtilityClass
-//@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class CommentMapper {
 
     public static CommentDto toCommentDto(Comment comment) {
