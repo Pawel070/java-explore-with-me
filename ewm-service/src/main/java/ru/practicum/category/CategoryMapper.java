@@ -1,26 +1,28 @@
 package ru.practicum.category;
 
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
+import lombok.experimental.UtilityClass;
 
 import ru.practicum.category.dto.CategoryDto;
 import ru.practicum.category.model.Category;
-import ru.practicum.event.model.Event;
 
+@UtilityClass
+public class CategoryMapper {
 
-@Mapper(componentModel = "spring", uses = {Event.class}, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
- public interface CategoryMapper {
-
-    static Category toCategory(CategoryDto categoryDto) {
-        return null;
+    public Category toCategory(CategoryDto categoryDto) {
+        return Category.builder()
+                .name(categoryDto.getName()).build();
     }
 
-    static CategoryDto toCategoryDto(Category category) {
-        return null;
+    public CategoryDto toCategoryDto(Category category) {
+        return CategoryDto.builder()
+                .id(category.getId())
+                .name(category.getName()).build();
     }
 
-    static Category toCategoryForPatch(CategoryDto categoryDto) {
-        return null;
+    public Category toCategoryForPatch(CategoryDto categoryDto) {
+        return Category.builder()
+                .id(categoryDto.getId())
+                .name(categoryDto.getName()).build();
     }
 
 }

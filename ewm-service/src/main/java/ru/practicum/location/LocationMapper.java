@@ -1,21 +1,26 @@
 package ru.practicum.location;
 
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-
-import ru.practicum.event.model.Event;
+import lombok.experimental.UtilityClass;
 import ru.practicum.location.dto.LocationDto;
 import ru.practicum.location.model.Location;
 
-@Mapper(componentModel = "spring", uses = {Event.class}, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
- public interface LocationMapper {
+@UtilityClass
+public class LocationMapper {
 
-    static Location toLocation(LocationDto locationDto) {
-        return null;
+    public Location toLocation(LocationDto locationDto) {
+        return Location.builder()
+                .lon(locationDto.getLon())
+                .lat(locationDto.getLat())
+                .build();
     }
 
-    static LocationDto toLocationDto(Location location) {
-        return null;
+
+    public LocationDto toLocationDto(Location location) {
+        return LocationDto.builder()
+                .id(location.getId())
+                .lon(location.getLon())
+                .lat(location.getLat())
+                .build();
     }
 
 }
