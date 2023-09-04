@@ -13,8 +13,8 @@ import ru.practicum.event.model.Event;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
+@Builder
 @Table(name = "compilations")
 public class Compilation {
 

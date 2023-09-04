@@ -22,13 +22,22 @@ public class StatClient extends BaseClient {
     private static final String API_PREFIX = "http://stats-server:9090";
 
     @Autowired
-    public StatClient(@Value(API_PREFIX) String serverUrl, RestTemplateBuilder builder) {
+  /*  public StatClient(@Value(API_PREFIX) String serverUrl, RestTemplateBuilder builder) {
        super(builder
                 .uriTemplateHandler(new DefaultUriBuilderFactory(serverUrl + API_PREFIX))
                 .requestFactory(HttpComponentsClientHttpRequestFactory::new)
                 .build()
         );
     }
+*/
+        public StatClient(@Value(API_PREFIX) String serverUrl, RestTemplateBuilder builder) {
+       super(builder
+                .uriTemplateHandler(new DefaultUriBuilderFactory(serverUrl + API_PREFIX))
+                .requestFactory(() -> new HttpComponentsClientHttpRequestFactory())
+                .build()
+        );
+    }
+
 
     public ResponseEntity<Object> addStat(EndpointHitDto endpointHitDto) {
         return post("/hit", endpointHitDto);

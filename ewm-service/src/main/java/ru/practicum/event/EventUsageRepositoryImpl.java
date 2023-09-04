@@ -12,7 +12,6 @@ import jakarta.persistence.PersistenceContextType;
 import jakarta.persistence.criteria.Predicate;
 
 import lombok.RequiredArgsConstructor;
-import lombok.var;
 
 import org.springframework.stereotype.Repository;
 

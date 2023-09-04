@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +35,7 @@ import ru.practicum.exceptions.WrongEventDateException;
 import ru.practicum.location.LocationMapper;
 import ru.practicum.location.LocationRepository;
 import ru.practicum.location.model.Location;
+import ru.practicum.statclient.StatClient;
 import ru.practicum.statdto.EndpointHitDto;
 import ru.practicum.user.UserRepository;
 import ru.practicum.user.model.User;
@@ -48,7 +49,7 @@ public class EventServiceImpl implements EventService {
     private final EventRepository eventRepository;
     private final LocationRepository locationRepository;
     private final UserRepository userRepository;
-    private final ru.practicum.client.StatClient statClient;
+    private final StatClient statClient;
     private final EventMapper eventMapper;
 
     @Override
@@ -212,28 +213,9 @@ public class EventServiceImpl implements EventService {
                 .ip(remoteAddress)
                 .timestamp(LocalDateTime.parse(time.format(ofPattern(MyConstants.DATE_PATTERN)))).build();
         statClient.addStat(endpointHitDto);
-        event.setViews((long) findViews(event.getId()));
-        eventRepository.save(event);
+         eventRepository.save(event);
         log.info("EventServiceImpl findEventAll: Событие полученно --> {} ", event);
         return eventMapper.toEventDtoForUser(event);
-    }
-
-    private int findViews(long eventId) {
-        log.info("EventServiceImpl findViews: Попытка получения количества просмотров события.");
-        String[] uri = {"/events" + "/" + eventId};
-        String startDate = LocalDateTime.now().minusMonths(1).format(DateTimeFormatter.ofPattern(MyConstants.DATE_PATTERN));
-        String endDate = LocalDateTime.now().plusMonths(1).format(DateTimeFormatter.ofPattern(MyConstants.DATE_PATTERN));
-        List<String> uris = new ArrayList<>();
-        Collections.addAll(uris, uri);
-        ResponseEntity<Object> stats = statClient.getStat(startDate, endDate, uri, true);
-        int views = 0;
-        if (stats.hasBody()) {
-            List<HashMap<String, Object>> body = (List<HashMap<String, Object>>) stats.getBody();
-            HashMap<String, Object> map = body.get(0);
-            views = (int) map.get("hits");
-        }
-        log.info("EventServiceImpl findViews: Количество просмотров события УИН {} --> {} ", eventId, views);
-        return views;
     }
 
     private void addHitsForEvents(List<Event> events, String remoteAddress) {
@@ -250,12 +232,12 @@ public class EventServiceImpl implements EventService {
         log.info("EventServiceImpl addViews: Добавление количества просмотров к событиям.");
         String startDate = LocalDateTime.now().minusMonths(1).format(DateTimeFormatter.ofPattern(MyConstants.DATE_PATTERN));
         String endDate = LocalDateTime.now().plusMonths(1).format(DateTimeFormatter.ofPattern(MyConstants.DATE_PATTERN));
-        List<String> uris = new ArrayList<>();
-        String[] uri = new String[events.size()];
-        for (int index = 0; index < events.size(); index++) uri[index] = "/events" + "/" + events.get(index).getId();
-        ResponseEntity<Object> stats = statClient.getStat(startDate, endDate, uri, true);
-        if (stats.hasBody()) {
-            List<HashMap<String, Object>> body = (List<HashMap<String, Object>>) stats.getBody();
+        String eventsUri = "/events/";
+        List<Long> eventIds = events.stream().map(Event::getId).collect(Collectors.toList());
+        List<String> uris = eventIds.stream().map(id -> eventsUri + id).collect(Collectors.toList());
+        ResponseEntity<Object> response = statClient.getStat(startDate, endDate, uris, true);
+        if (response.hasBody()) {
+            List<HashMap<String, Object>> body = (List<HashMap<String, Object>>) response.getBody();
             HashMap<Long, Long> map = new HashMap<>();
             for (int index = 0; index < body.size(); index++) {
                 String bufer = (String) body.get(index).get("uri");

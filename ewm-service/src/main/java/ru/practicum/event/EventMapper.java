@@ -3,8 +3,7 @@ package ru.practicum.event;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
+import lombok.experimental.UtilityClass;
 
 import ru.practicum.MyConstants;
 import ru.practicum.category.CategoryMapper;
@@ -17,22 +16,10 @@ import ru.practicum.location.LocationMapper;
 import ru.practicum.user.UserMapper;
 import ru.practicum.user.dto.UserSmDto;
 
-
-
-@Mapper(componentModel = "spring", uses = {Event.class}, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
- public interface EventMapper {
-
-    static Event toEvent(Long id, EventCreateDto eventCreateDto) {
-        return null;
-    }
-
-/*
-
 @UtilityClass
 public class EventMapper {
-*/
 
-    default Event toEvent(EventCreateDto eventCreateDto) {
+    public Event toEvent(EventCreateDto eventCreateDto) {
         return Event.builder()
                 .annotation(eventCreateDto.getAnnotation())
                 .eventDate(LocalDateTime.parse(eventCreateDto.getEventDate(),DateTimeFormatter.ofPattern(MyConstants.DATE_PATTERN)))
@@ -49,7 +36,7 @@ public class EventMapper {
                 .build();
     }
 
-    default EventDto toEventDtoForSave(Event event) {
+    public EventDto toEventDtoForSave(Event event) {
         return EventDto.builder()
                 .id(event.getId())
                 .annotation(event.getAnnotation())
@@ -73,7 +60,7 @@ public class EventMapper {
                 .build();
     }
 
-    default EventModelDto toEventModelDto(Event event) {
+    public EventModelDto toEventModelDto(Event event) {
         return EventDto.builder()
                 .eventDate(event.getEventDate().format(DateTimeFormatter.ofPattern(MyConstants.DATE_PATTERN)))
                 .annotation(event.getAnnotation())
@@ -86,7 +73,7 @@ public class EventMapper {
                 .views(event.getViews())
                 .build();
     }
-     default EventDto toEventDtoForUser(Event event) {
+     public EventDto toEventDtoForUser(Event event) {
          return EventDto.builder()
                 .id(event.getId())
                 .annotation(event.getAnnotation())
@@ -108,7 +95,7 @@ public class EventMapper {
                 .build();
     }
 
-    default Event toReplEvent(EventReplRequestDto EventReplRequestDto, Event event) {
+    public Event toReplEvent(EventReplRequestDto EventReplRequestDto, Event event) {
         return Event.builder()
                 .id(event.getId())
                 .annotation(EventReplRequestDto.getAnnotation() != null ? EventReplRequestDto.getAnnotation() : event.getAnnotation())
@@ -132,7 +119,7 @@ public class EventMapper {
 
     }
 
-    default Event toAReplEvent(EventAReplRequestDto eventAReplRequestDto, Event event) {
+    public Event toAReplEvent(EventAReplRequestDto eventAReplRequestDto, Event event) {
         return Event.builder()
                 .id(event.getId())
                 .annotation(eventAReplRequestDto.getAnnotation() != null ? eventAReplRequestDto.getAnnotation() : event.getAnnotation())

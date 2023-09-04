@@ -90,7 +90,7 @@ public class RequestServiceImpl implements RequestService {
     @Transactional
     public List<ParticipationRequestDto> findRequests(Long userId) {
         log.info("RequestServiceImpl findRequests: Получение заявок пользователя УИН {}", userId);
-        if (!userRepository.existsById(userId)) throw new NotFoundException("Пользователь с УИН {} отсутствует в базе.", userId);
+        if (!userRepository.existsById(userId)) throw new NotFoundException("Пользователь с УИН {} отсутствует в базе.");
         return requestRepository.findByRequester_Id(userId).stream()
                 .map(RequestMapper::toParticipationRequestDto).collect(Collectors.toList());
     }
@@ -99,7 +99,7 @@ public class RequestServiceImpl implements RequestService {
     @Transactional
     public List<ParticipationRequestDto> findRequestsByUsersEvent(Long eventId, Long userId) {
         log.info("RequestServiceImpl findRequestsByUsersEvent: Поиск заявок пользователей на событие {}", eventId);
-        if (!userRepository.existsById(userId))  throw new NotFoundException("Пользователь с УИН {} отсутствует в базе.", userId);
+        if (!userRepository.existsById(userId)) throw new NotFoundException("Пользователь с УИН {} отсутствует в базе.");
         if (!eventRepository.existsById(eventId)) throw new NotFoundException("Такого события нет в базе.");
         return requestRepository.findByEvent_Id(eventId).stream()
                 .map(RequestMapper::toParticipationRequestDto).collect(Collectors.toList());
