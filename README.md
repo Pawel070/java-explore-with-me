@@ -1,3 +1,5 @@
-# java-explore-with-me
+# ПРОЕКТ ДИПЛОМНЫЙ java-explore-with-me
 
-Template repository for ExploreWithMe project.
+Репозиторий проекта Яндекс.Практикум ExploreWithMe части 1, 2, 3.
+
+Ссылка на пул-реквест третьей части: https://github.com/Pawel070/java-explore-with-me/pull/5#issue-1879972649
